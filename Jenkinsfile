@@ -2,33 +2,21 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK17'
         maven 'Maven3'
+        jdk 'JDK17'
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/np025/time-tracker.git'
             }
         }
 
-        stage('Build') {
+        stage('Build & Test') {
             steps {
-                sh 'mvn clean compile'
-            }
-        }
-
-        stage('Unit Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-        stage('Package') {
-            steps {
-                sh 'mvn package'
+                sh 'mvn clean test'
             }
         }
     }
